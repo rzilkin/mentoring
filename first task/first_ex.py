@@ -1,12 +1,15 @@
 import csv
-from analyzer import *
 
-def is_numeric_value(val: str):
+from analyzer import Analyzer
+
+
+def is_numeric_value(val: str) -> bool:
     try:
         float(val)
         return True
     except ValueError:
         return False
+
 
 with open("first task/student_performance_dataset.csv") as file:
     reader = csv.DictReader(file)
@@ -28,8 +31,8 @@ with open("first task/student_performance_dataset.csv") as file:
 data_analyz = Analyzer(dataset)
 data_analyz.avg()
 data_analyz.std()
-data_analyz.min()
-data_analyz.max()
+data_analyz.min_in_column()
+data_analyz.max_in_column()
 data_analyz.quantile(0.5)
 data_analyz.median()
 data_analyz.mode()
@@ -40,4 +43,5 @@ with open('first task/result.csv', 'w') as f:
     writer = csv.writer(f)
     writer.writerow(['metrics', *data_analyz.result['metrics']])
     for key, val in data_analyz.result.items():
-        if key != 'metrics': writer.writerow([key, *val])
+        if key != 'metrics':
+            writer.writerow([key, *val])
